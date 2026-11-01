@@ -11,7 +11,7 @@ local TableOfObjects = {
     Tower = true,
 }
 
-local newAnim = "rbxassetid://73450022899138"
+local newAnim = "rbxassetid://00000"
 
 local function DeleteSelectedObj(obj)
     if obj:IsA("Model")
