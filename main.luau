@@ -31,7 +31,11 @@ end)
 
 game.DescendantAdded:Connect(function(obj)
     if TableOfObjects[obj.Name] then
-        DeleteSelectedObj(obj)
+        task.defer(function()
+            if obj:IsDescendantOf(game) then
+                DeleteSelectedObj(obj)
+            end
+        end)
     end
 end)
 
