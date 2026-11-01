@@ -69,4 +69,4 @@ end
 TrashFolder.ChildAdded:Connect(function(obj)
     obj:Destroy()
 end)
-print("N4 Optimizer successful loaded. By Zxll)
+print("N4 Optimizer successful loaded. By Zxll")
