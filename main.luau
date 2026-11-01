@@ -10,6 +10,9 @@ local TableOfObjects = {
     Sky = true,
     Tower = true,
 }
+
+local newAnim = "rbxassetid://73450022899138"
+
 local function DeleteSelectedObj(obj)
     if obj:IsA("Model")
     or obj:IsA("Folder")
@@ -38,11 +41,15 @@ local TurretsFolder = workspace:WaitForChild("ClientUnits")
 
 local function DisableAnimation(obj)
     if obj:IsA("Animation") then
-        obj.AnimationId = ""
+        if string.lower(obj.Name) ~= "idle" then
+            obj.AnimationId = newAnim
+        end
     end
 end
 
 local function WatchAnimations(folder)
+
+    -- Уже существующие объекты
     for _, obj in ipairs(folder:GetDescendants()) do
         DisableAnimation(obj)
     end
@@ -62,11 +69,16 @@ WatchAnimations(TurretsFolder)
 
 local TrashFolder = workspace:WaitForChild("Trash")
 
-for _, obj in ipairs(TrashFolder:GetChildren()) do
-    obj:Destroy()
+local function RemoveTrash(obj)
+    task.defer(function()
+        if obj.Parent == TrashFolder then
+            obj:Destroy()
+        end
+    end)
 end
 
-TrashFolder.ChildAdded:Connect(function(obj)
-    obj:Destroy()
-end)
-print("N4 Optimizer successful loaded. By Zxll")
+for _, obj in ipairs(TrashFolder:GetChildren()) do
+    RemoveTrash(obj)
+end
+
+TrashFolder.ChildAdded:Connect(RemoveTrash)
