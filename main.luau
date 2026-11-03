@@ -44,6 +44,26 @@ WatchAnimations(EnemiesFolder)
 WatchAnimations(TowersFolder)
 WatchAnimations(TurretsFolder)
 
+local function OptimizeNPC(obj)
+    if obj:IsA("ParticleEmitter") then
+        obj.Enabled = false
+        obj:Clear()
+    elseif obj:IsA("Beam") or obj:IsA("Trail") then
+        obj.Enabled = false
+    end
+end
+
+for _, obj in ipairs(EnemiesFolder:GetDescendants()) do
+    OptimizeNPC(obj)
+end
+
+EnemiesFolder.DescendantAdded:Connect(function(obj)
+    task.defer(function()
+        if obj:IsDescendantOf(EnemiesFolder) then
+            OptimizeNPC(obj)
+        end
+    end)
+end)
 
 local function OptimizeClientUnit(obj)
     if obj:IsA("Beam") or obj:IsA("Trail") then
