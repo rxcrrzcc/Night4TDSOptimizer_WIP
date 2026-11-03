@@ -41,17 +41,22 @@ local TowersFolder = workspace:WaitForChild("Towers")
 local TurretsFolder = workspace:WaitForChild("ClientUnits")
 
 local function OptimizeNPC(obj)
-    if obj:IsA("ParticleEmitter") then
-        obj.Enabled = false
-        obj:Clear()
-    elseif obj:IsA("Beam") or obj:IsA("Trail") then
-        obj.Enabled = false
+    if obj:IsA("MeshPart") then
+        obj:Destroy()
     end
 end
 
 for _, obj in ipairs(EnemiesFolder:GetDescendants()) do
     OptimizeNPC(obj)
 end
+
+EnemiesFolder.DescendantAdded:Connect(function(obj)
+    task.defer(function()
+        if obj:IsDescendantOf(EnemiesFolder) then
+            OptimizeNPC(obj)
+        end
+    end)
+end)
 
 EnemiesFolder.DescendantAdded:Connect(function(obj)
     task.defer(function()
