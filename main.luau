@@ -40,52 +40,6 @@ local EnemiesFolder = workspace:WaitForChild("NPCs")
 local TowersFolder = workspace:WaitForChild("Towers")
 local TurretsFolder = workspace:WaitForChild("ClientUnits")
 
-local WatchedAnimators = {}
-
-local function WatchAnimator(animator)
-    if not animator:IsA("Animator") then return end
-    if WatchedAnimators[animator] then return end
-
-    WatchedAnimators[animator] = true
-
-    for _, track in ipairs(animator:GetPlayingAnimationTracks()) do
-        local animation = track.Animation
-
-        if not animation or string.lower(animation.Name) ~= "idle" then
-            track.Looped = false
-            track:Stop(0)
-        end
-    end
-
-    animator.AnimationPlayed:Connect(function(track)
-        local animation = track.Animation
-
-        if not animation or string.lower(animation.Name) ~= "idle" then
-            track.Looped = false
-            track:Stop(0)
-        end
-    end)
-end
-
-local function WatchAnimations(folder)
-
-    for _, obj in ipairs(folder:GetDescendants()) do
-        WatchAnimator(obj)
-    end
-
-    folder.DescendantAdded:Connect(function(obj)
-        task.defer(function()
-            if obj:IsDescendantOf(folder) then
-                WatchAnimator(obj)
-
-                for _, descendant in ipairs(obj:GetDescendants()) do
-                    WatchAnimator(descendant)
-                end
-            end
-        end)
-    end)
-end
-
 WatchAnimations(EnemiesFolder)
 WatchAnimations(TowersFolder)
 WatchAnimations(TurretsFolder)
