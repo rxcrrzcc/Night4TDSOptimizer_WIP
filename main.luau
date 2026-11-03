@@ -40,10 +40,6 @@ local EnemiesFolder = workspace:WaitForChild("NPCs")
 local TowersFolder = workspace:WaitForChild("Towers")
 local TurretsFolder = workspace:WaitForChild("ClientUnits")
 
-WatchAnimations(EnemiesFolder)
-WatchAnimations(TowersFolder)
-WatchAnimations(TurretsFolder)
-
 local function OptimizeNPC(obj)
     if obj:IsA("ParticleEmitter") then
         obj.Enabled = false
