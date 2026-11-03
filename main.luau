@@ -1,7 +1,7 @@
 
 local TableOfObjects = {
     PathArrows = true,
-    Cliff = true,
+    Boundaries = true,
     Background = true,
     VFX = true,
     Lighting = true,
