@@ -41,7 +41,7 @@ local TowersFolder = workspace:WaitForChild("Towers")
 local TurretsFolder = workspace:WaitForChild("ClientUnits")
 
 local function OptimizeNPC(obj)
-    if obj:IsA("MeshPart") and not obj.Name == "Shield" then
+    if obj:IsA("MeshPart") and obj.Name ~= "Shield" then
         obj:Destroy()
     end
 end
