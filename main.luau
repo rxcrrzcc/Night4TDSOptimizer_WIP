@@ -1,4 +1,3 @@
-
 local TableOfObjects = {
     PathArrows = true,
     Boundaries = true,
@@ -92,6 +91,10 @@ local function OptimizeClientUnit(obj)
     or obj:IsA("Texture") then
         obj:Destroy()
     end
+end
+
+for _, obj in ipairs(TurretsFolder:GetChildren()) do
+    OptimizeClientUnit(obj)
 end
 
 for _, obj in ipairs(TurretsFolder:GetDescendants()) do
