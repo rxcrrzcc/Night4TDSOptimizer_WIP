@@ -73,13 +73,19 @@ TowersFolder.DescendantAdded:Connect(function(obj)
 end)
 
 local function OptimizeClientUnit(obj)
-    if obj:IsA("Beam") or obj:IsA("Trail") then
-        obj.Enabled = false
+    if obj:IsA("Model") and obj.Name == "Fallen" then
+        obj:Destroy()
+        return
     end
 
-    if obj:IsA("ParticleEmitter") then
-        obj.Enabled = false
-        obj:Clear()
+    if obj:IsA("Accessory")
+    or obj:IsA("MeshPart")
+    or obj:IsA("ParticleEmitter")
+    or obj:IsA("Beam")
+    or obj:IsA("Trail")
+    or obj:IsA("Decal")
+    or obj:IsA("Texture") then
+        obj:Destroy()
     end
 end
 
