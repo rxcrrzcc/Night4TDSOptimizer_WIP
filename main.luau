@@ -79,7 +79,6 @@ local function OptimizeClientUnit(obj)
     end
 
     if obj:IsA("Accessory")
-    or obj:IsA("MeshPart")
     or obj:IsA("ParticleEmitter")
     or obj:IsA("Beam")
     or obj:IsA("Trail")
