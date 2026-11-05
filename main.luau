@@ -1,3 +1,4 @@
+
 local TableOfObjects = {
     PathArrows = true,
     Boundaries = true,
@@ -39,24 +40,19 @@ local EnemiesFolder = workspace:WaitForChild("NPCs")
 local TowersFolder = workspace:WaitForChild("Towers")
 local TurretsFolder = workspace:WaitForChild("ClientUnits")
 
-local function OptimizeNPC(obj)
-    if obj:IsA("MeshPart") and obj.Name ~= "Shield" then
+local function RemoveEnemy(obj)
+    if obj:IsA("Model") then
         obj:Destroy()
     end
 end
 
-for _, obj in ipairs(EnemiesFolder:GetDescendants()) do
-    OptimizeNPC(obj)
+for _, obj in ipairs(EnemiesFolder:GetChildren()) do
+    RemoveEnemy(obj)
 end
 
-EnemiesFolder.DescendantAdded:Connect(function(obj)
-    task.defer(function()
-        if obj:IsDescendantOf(EnemiesFolder) then
-            OptimizeNPC(obj)
-        end
-    end)
-end)
+EnemiesFolder.ChildAdded:Connect(RemoveEnemy)
 
+-- Towers: очистка эффектов
 local function RemoveTowerEffects(obj)
     if obj:IsA("ParticleEmitter")
     or obj:IsA("Beam")
